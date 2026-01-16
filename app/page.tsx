@@ -1,65 +1,193 @@
+"use client";
+
+import Navbar from "@/components/Navbar";
+import Hero from "@/components/Hero";
+import EventCard from "@/components/EventCard";
+import Footer from "@/components/Footer";
+import FAQ from "@/components/FAQ";
+import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
+
+const events = [
+  {
+    id: 1,
+    title: "Hackathon 2026",
+    date: "March 15, 2026",
+    description: "24-hour coding marathon to solve real-world problems. Win exciting prizes!",
+    image: "/assets/web_dev_cinematics.png",
+  },
+  {
+    id: 2,
+    title: "AI Workshop",
+    date: "April 10, 2026",
+    description: "Hands-on session on Neural Networks and Deep Learning with industry experts.",
+    image: "/assets/ml_ds_cinematics.png",
+  },
+  {
+    id: 3,
+    title: "Orientation Session",
+    date: "Feb 20, 2026",
+    description: "Welcome to ASPER! Meet the team and learn about our domains.",
+    image: "/assets/game_dev_cinematics.png",
+  },
+];
+
+const team = [
+  { id: 1, name: "Alex Johnson", role: "President", image: "/assets/logo.png" },
+  { id: 2, name: "Sarah Lee", role: "Tech Lead", image: "/assets/logo.png" },
+  { id: 3, name: "Mike Chen", role: "Events Head", image: "/assets/logo.png" },
+  { id: 4, name: "Emily Davis", role: "Creative Lead", image: "/assets/logo.png" },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="bg-deep-black min-h-screen">
+      <Navbar />
+
+      {/* Hero Section */}
+      <section id="home">
+        <Hero />
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-24 px-6 max-w-7xl mx-auto border-b border-white/5">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <span className="text-neon-red font-bold tracking-widest uppercase text-sm mb-2 block">Who We Are</span>
+            <h2 className="text-4xl md:text-6xl font-black text-white mb-6 leading-tight">
+              INNOVATING <br />
+              <span className="text-gray-700">THE FUTURE</span>
+            </h2>
+            <p className="text-gray-400 text-lg leading-relaxed mb-8">
+              ASPER is a dynamic community of aspiring students, proudly driven by the <span className="text-white font-bold">IT Department of UIT RGPV</span>. We are dedicated to promoting innovation, cultivating growth, and mastering diverse technologies to shape the future.
+            </p>
+
+            <div className="grid grid-cols-2 gap-6">
+              <div className="p-5 bg-white/5 border border-white/10 rounded-lg hover:border-neon-red/50 transition-colors">
+                <h4 className="text-neon-red font-bold text-3xl mb-1">UIT RGPV</h4>
+                <p className="text-gray-500 text-sm font-medium">IT Department</p>
+              </div>
+              <div className="p-5 bg-white/5 border border-white/10 rounded-lg hover:border-neon-red/50 transition-colors">
+                <h4 className="text-neon-red font-bold text-3xl mb-1">100+</h4>
+                <p className="text-gray-500 text-sm font-medium">Active Members</p>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="relative"
           >
-            Documentation
-          </a>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 group hover:border-neon-red/50 transition-all shadow-2xl">
+                {/* using standard img to respect natural aspect ratio of user assets */}
+                <img
+                  src="/assets/about_asper/about_image_1.jpg"
+                  alt="Asper Community Event"
+                  className="w-full h-auto object-contain block group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10 group hover:border-neon-red/50 transition-all shadow-2xl">
+                {/* using standard img to respect natural aspect ratio of user assets */}
+                <img
+                  src="/assets/about_asper/about_image_2.jpg"
+                  alt="Asper Team"
+                  className="w-full h-auto object-contain block group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </div>
+
+            {/* Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-neon-red/10 blur-3xl -z-10 rounded-full" />
+          </motion.div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Events Section */}
+      <section id="events" className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="flex items-end justify-between mb-12">
+          <div>
+            <span className="text-neon-red font-bold tracking-widest uppercase text-sm mb-2 block">Mark Your Calendars</span>
+            <h2 className="text-4xl md:text-5xl font-black text-white">UPCOMING <span className="text-gray-500">EVENTS</span></h2>
+          </div>
+          <button className="hidden md:flex items-center gap-2 text-white hover:text-neon-red transition-colors font-bold">
+            View All <span className="text-xl">→</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {events.map((event, index) => (
+            <motion.div
+              key={event.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+            >
+              <EventCard {...event} />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Team/Community Section */}
+      <section id="team" className="py-24 px-6 bg-black/50 border-y border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-white text-center mb-16">MEET THE <br /><span className="text-neon-red">CORE TEAM</span></h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {team.map((member, index) => (
+              <motion.div
+                key={member.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group text-center"
+              >
+                <div className="w-full aspect-square bg-gray-800 rounded-2xl mb-4 overflow-hidden border border-white/10 group-hover:border-neon-red/50 transition-all relative">
+                  {member.image && (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      className="object-cover"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 z-10">
+                    <span className="text-neon-red font-bold text-sm uppercase tracking-wider">{member.role}</span>
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold text-white group-hover:text-neon-red transition-colors">{member.name}</h3>
+                <p className="text-gray-500 text-sm hidden md:block">{member.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Join CTA */}
+      <section id="join" className="py-32 px-6 text-center">
+        <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter font-heading">READY TO <span className="text-neon-red">LEVEL UP?</span></h2>
+        <p className="text-gray-400 text-xl mb-12 max-w-2xl mx-auto">Join the most elite technical community on campus. Build, innovate, and dominate.</p>
+        <button className="px-10 py-5 bg-neon-red text-white text-lg font-bold rounded-lg shadow-[0_0_20px_rgba(255,0,51,0.6)] hover:shadow-[0_0_50px_rgba(255,0,51,0.8)] hover:scale-105 transition-all font-heading">
+          APPLY NOW
+        </button>
+      </section>
+
+      {/* FAQ Section */}
+      <FAQ />
+
+      <Footer />
+    </main>
   );
 }
