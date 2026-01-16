@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
@@ -17,9 +17,26 @@ const navLinks = [
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 0);
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-deep-black/70 border-b border-white/10">
+        <nav
+            className={clsx(
+                "fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b",
+                isScrolled
+                    ? "backdrop-blur-md bg-deep-black/70 border-white/10"
+                    : "bg-transparent border-transparent backdrop-blur-none"
+            )}
+        >
             <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2 group">
