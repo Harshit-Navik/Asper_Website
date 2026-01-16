@@ -25,7 +25,7 @@ export default function Navbar() {
                 <Link href="/" className="flex items-center gap-2 group">
                     <div className="relative w-24 h-16">
                         <Image
-                            src="/assets/logo.png"
+                            src="https://res.cloudinary.com/dujwwjdkq/image/upload/v1768585918/Gemini_Generated_Image_ie1mzaie1mzaie1m_ehapjr.jpg"
                             alt="Asper Logo"
                             fill
                             className="object-contain"
