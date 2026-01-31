@@ -8,12 +8,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import clsx from "clsx";
 
 const navLinks = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Events", href: "#events" },
-    { name: "Team", href: "#team" },
-    { name: "Departments", href: "#departments" },
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Events", href: "/#events" },
+    { name: "Team", href: "/team" },
     { name: "Projects", href: "/projects" },
+    { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
