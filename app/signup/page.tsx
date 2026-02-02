@@ -120,7 +120,7 @@ export default function SignupPage() {
 
                         <div>
                             <label className="block text-gray-300 text-sm font-bold mb-2 uppercase tracking-wide">
-                                Select Domains (Choose at least one)
+                                Select Your Domains (Choose at least one)
                             </label>
                             <div className="relative group">
                                 <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-neon-red transition-colors" size={20} />
@@ -131,7 +131,7 @@ export default function SignupPage() {
                                 >
                                     <span className={`block truncate ${formData.domain.length === 0 ? "text-gray-600" : "text-white"}`}>
                                         {formData.domain.length === 0
-                                            ? "Select your domains of interest"
+                                            ? "Select your domains"
                                             : DEPARTMENTS.filter(d => formData.domain.includes(d.value)).map(d => d.label).join(", ")}
                                     </span>
                                     <ChevronDown
