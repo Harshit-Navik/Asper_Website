@@ -27,6 +27,28 @@ model Project {
   imageLinks  String[]
   doubts      String?    @db.Text
   checked     Boolean    @default(false)
+  accepted    Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+model User {
+  id        String     @id @default(cuid())
+  name      String
+  email     String     @unique
+  password  String
+  role      Role       @default(MEMBER)
+  domain    Department[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  projects  Project[]
+  resetToken String?   @unique
+  resetTokenExpiry DateTime?
 }
