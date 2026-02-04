@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Filter, LogOut } from "lucide-react";
 import AdminProjectCard from "@/components/AdminProjectCard";
-import { logout } from "@/app/actions/auth";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 interface Project {
@@ -16,6 +16,7 @@ interface Project {
     imageLinks: string[];
     doubts?: string;
     checked: boolean;
+    accepted: boolean;
     createdAt: string;
 }
 
@@ -40,7 +41,8 @@ export default function AdminDashboard() {
 
     const fetchProjects = async () => {
         try {
-            const res = await fetch("/api/projects?checked=false");
+            // Fetch ALL projects (remove checked=false filter)
+            const res = await fetch("/api/projects");
             if (res.ok) {
                 const data = await res.json();
                 setProjects(data);
@@ -56,18 +58,21 @@ export default function AdminDashboard() {
         fetchProjects();
     }, []);
 
-    const handleCheck = async (id: string) => {
+    const handleUpdateStatus = async (id: string, accepted: boolean) => {
         setProcessingId(id);
         try {
             const res = await fetch(`/api/projects/${id}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ checked: true }),
+                body: JSON.stringify({ checked: true, accepted }),
             });
 
             if (res.ok) {
-                // Remove the project from the list immediately
-                setProjects((prev) => prev.filter((p) => p.id !== id));
+                setProjects((prev) =>
+                    prev.map((p) =>
+                        p.id === id ? { ...p, checked: true, accepted } : p
+                    )
+                );
             }
         } catch (error) {
             console.error("Failed to update project", error);
@@ -76,9 +81,48 @@ export default function AdminDashboard() {
         }
     };
 
+    const handleUndo = async (id: string) => {
+        setProcessingId(id);
+        try {
+            const res = await fetch(`/api/projects/${id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ checked: false, accepted: false }),
+            });
+
+            if (res.ok) {
+                setProjects((prev) =>
+                    prev.map((p) =>
+                        p.id === id ? { ...p, checked: false, accepted: false } : p
+                    )
+                );
+            }
+        } catch (error) {
+            console.error("Failed to undo project status", error);
+        } finally {
+            setProcessingId(null);
+        }
+    };
+
+    const handleDelete = async (id: string) => {
+        setProcessingId(id);
+        try {
+            const res = await fetch(`/api/projects/${id}`, {
+                method: "DELETE",
+            });
+
+            if (res.ok) {
+                setProjects((prev) => prev.filter((p) => p.id !== id));
+            }
+        } catch (error) {
+            console.error("Failed to delete project", error);
+        } finally {
+            setProcessingId(null);
+        }
+    };
+
     const handleLogout = async () => {
-        await logout();
-        router.refresh();
+        await signOut({ callbackUrl: "/login" });
     };
 
     const filteredProjects = selectedDept === "ALL"
@@ -135,7 +179,9 @@ export default function AdminDashboard() {
                                 <AdminProjectCard
                                     key={project.id}
                                     project={project}
-                                    onCheck={handleCheck}
+                                    onUpdateStatus={handleUpdateStatus}
+                                    onUndo={handleUndo}
+                                    onDelete={handleDelete}
                                     isProcessing={processingId === project.id}
                                 />
                             ))}

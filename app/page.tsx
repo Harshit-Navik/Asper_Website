@@ -179,9 +179,11 @@ export default function Home() {
       <section id="join" className="py-32 px-6 text-center">
         <h2 className="text-5xl md:text-7xl font-black text-white mb-8 tracking-tighter font-heading">READY TO <span className="text-neon-red">LEVEL UP?</span></h2>
         <p className="text-gray-400 text-xl mb-12 max-w-2xl mx-auto">Join the most elite technical community on campus. Build, innovate, and dominate.</p>
-        <button className="px-10 py-5 bg-neon-red text-white text-lg font-bold rounded-lg shadow-[0_0_20px_rgba(255,0,51,0.6)] hover:shadow-[0_0_50px_rgba(255,0,51,0.8)] hover:scale-105 transition-all font-heading">
-          APPLY NOW
-        </button>
+        <Link href="/signup">
+          <button className="px-10 py-5 bg-neon-red text-white text-lg font-bold rounded-lg shadow-[0_0_20px_rgba(255,0,51,0.6)] hover:shadow-[0_0_50px_rgba(255,0,51,0.8)] hover:scale-105 transition-all font-heading">
+            APPLY NOW
+          </button>
+        </Link>
       </section>
 
       {/* FAQ Section */}

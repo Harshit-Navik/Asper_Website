@@ -1,12 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProjectFormModal from "@/components/ProjectFormModal";
-import { Plus, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import UserProjectCard from "@/components/UserProjectCard";
+import { Plus } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
+interface Project {
+    id: string;
+    name: string;
+    department: string;
+    githubLink?: string;
+    liveLink?: string;
+    imageLinks: string[];
+    doubts?: string;
+    checked: boolean;
+    accepted: boolean;
+    createdAt: string;
+}
 
 export default function ProjectsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/login");
+        } else if (status === "authenticated" && session?.user?.id) {
+            fetchProjects(session.user.id);
+        }
+    }, [status, session, router]);
+
+    const fetchProjects = async (userId: string) => {
+        try {
+            const res = await fetch(`/api/projects?userId=${userId}`);
+            if (res.ok) {
+                const data = await res.json();
+                setProjects(data);
+            }
+        } catch (error) {
+            console.error("Failed to fetch projects", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (status === "loading") {
+        return (
+            <div className="min-h-screen bg-black flex justify-center items-center">
+                <div className="w-8 h-8 border-4 border-neon-red border-t-transparent rounded-full animate-spin" />
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-black pt-24 pb-12 px-6">
@@ -41,6 +91,35 @@ export default function ProjectsPage() {
                         <Plus className="group-hover:rotate-90 transition-transform duration-300" />
                         SUBMIT PROJECT
                     </motion.button>
+                </div>
+
+                {/* Your Submissions Section */}
+                <div className="mb-16">
+                    <h2 className="text-2xl font-bold text-white mb-6">Your Submissions</h2>
+
+                    {loading ? (
+                        <div className="flex justify-center py-10">
+                            <div className="w-8 h-8 border-4 border-neon-red border-t-transparent rounded-full animate-spin" />
+                        </div>
+                    ) : projects.length === 0 ? (
+                        <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+                            <p className="text-gray-400 mb-4">You haven't submitted any projects yet.</p>
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="text-neon-red hover:underline"
+                            >
+                                Submit your first project
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <AnimatePresence>
+                                {projects.map((project) => (
+                                    <UserProjectCard key={project.id} project={project} />
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    )}
                 </div>
 
                 {/* Instructions Grid */}
@@ -79,7 +158,10 @@ export default function ProjectsPage() {
                 {/* Modal */}
                 <ProjectFormModal
                     isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
+                    onClose={() => {
+                        setIsModalOpen(false);
+                        if (session?.user?.id) fetchProjects(session.user.id); // Refresh list on close
+                    }}
                 />
             </div>
         </div>

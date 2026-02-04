@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Check, Github, Globe, MessageSquare, ImageIcon, ChevronDown, ChevronUp, FileText, X, RotateCcw, Trash2 } from "lucide-react";
+import { Github, Globe, MessageSquare, ImageIcon, ChevronDown, ChevronUp, FileText } from "lucide-react";
 
 interface Project {
     id: string;
@@ -17,15 +17,11 @@ interface Project {
     createdAt: string;
 }
 
-interface AdminProjectCardProps {
+interface UserProjectCardProps {
     project: Project;
-    onUpdateStatus: (id: string, accepted: boolean) => void;
-    onUndo: (id: string) => void;
-    onDelete: (id: string) => void;
-    isProcessing: boolean;
 }
 
-export default function AdminProjectCard({ project, onUpdateStatus, onUndo, onDelete, isProcessing }: AdminProjectCardProps) {
+export default function UserProjectCard({ project }: UserProjectCardProps) {
     const [showImages, setShowImages] = useState(false);
 
     const cardStyle = project.checked
@@ -34,46 +30,26 @@ export default function AdminProjectCard({ project, onUpdateStatus, onUndo, onDe
             : "border-red-500/50 bg-red-900/10 hover:border-red-500"
         : "bg-white/5 border-white/10 hover:border-neon-red/30";
 
-    const handleDeleteClick = () => {
-        if (window.confirm("Are you sure you want to delete this project? This action cannot be undone.")) {
-            onDelete(project.id);
-        }
-    };
+    const statusText = project.checked
+        ? project.accepted
+            ? "ACCEPTED"
+            : "REJECTED"
+        : "UNDER REVIEW";
+
+    const statusColor = project.checked
+        ? project.accepted
+            ? "bg-green-500/20 text-green-500"
+            : "bg-red-500/20 text-red-500"
+        : "bg-yellow-500/20 text-yellow-500";
 
     return (
         <motion.div
             layout
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.2 } }}
-            className={`relative rounded-xl overflow-hidden border transition-all group flex flex-col ${cardStyle}`}
+            className={`rounded-xl overflow-hidden border transition-all group flex flex-col ${cardStyle}`}
         >
-            {/* Action Icons */}
-            <div className="absolute top-4 right-4 z-10 flex gap-2">
-                <button
-                    onClick={handleDeleteClick}
-                    disabled={isProcessing}
-                    className="p-2 bg-black/50 hover:bg-red-500 text-gray-400 hover:text-white rounded-lg transition-colors"
-                    title="Delete Project"
-                >
-                    <Trash2 size={16} />
-                </button>
-            </div>
-
-            {project.checked && (
-                <div className="absolute top-4 left-4 z-10">
-                    <button
-                        onClick={() => onUndo(project.id)}
-                        disabled={isProcessing}
-                        className="p-2 bg-black/50 hover:bg-white text-gray-400 hover:text-black rounded-lg transition-colors"
-                        title="Undo Status"
-                    >
-                        <RotateCcw size={16} />
-                    </button>
-                </div>
-            )}
-
-            <div className="p-6 flex-1 flex flex-col pt-12">
+            <div className="p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                     <div>
                         <span className="text-xs font-mono text-neon-red bg-neon-red/10 px-2 py-1 rounded mb-2 inline-block">
@@ -83,6 +59,9 @@ export default function AdminProjectCard({ project, onUpdateStatus, onUndo, onDe
                         <p className="text-xs text-gray-500">
                             {new Date(project.createdAt).toLocaleDateString()}
                         </p>
+                    </div>
+                    <div className={`px-3 py-1 rounded-full text-xs font-bold ${statusColor}`}>
+                        {statusText}
                     </div>
                 </div>
 
@@ -191,33 +170,6 @@ export default function AdminProjectCard({ project, onUpdateStatus, onUndo, onDe
                                 </motion.div>
                             )}
                         </AnimatePresence>
-                    </div>
-                )}
-
-                {!project.checked && (
-                    <div className="mt-auto pt-4 border-t border-white/5 grid grid-cols-2 gap-3">
-                        <button
-                            onClick={() => onUpdateStatus(project.id, true)}
-                            disabled={isProcessing}
-                            className="bg-green-600/20 hover:bg-green-600 text-green-500 hover:text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 border border-green-600/20"
-                        >
-                            {isProcessing ? (
-                                <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                            ) : (
-                                <>
-                                    <Check size={18} />
-                                    Accept
-                                </>
-                            )}
-                        </button>
-                        <button
-                            onClick={() => onUpdateStatus(project.id, false)}
-                            disabled={isProcessing}
-                            className="bg-red-600/20 hover:bg-red-600 text-red-500 hover:text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 border border-red-600/20"
-                        >
-                            <X size={18} />
-                            Reject
-                        </button>
                     </div>
                 )}
             </div>

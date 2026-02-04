@@ -82,7 +82,7 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="relative h-screen w-full overflow-hidden flex items-center bg-deep-black">
+        <section className="relative h-screen w-full overflow-hidden flex items-center bg-deep-black pt-20">
             {/* Background Slider */}
             <AnimatePresence mode="popLayout">
                 <motion.div
