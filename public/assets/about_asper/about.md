@@ -1,0 +1,1 @@
+so asper is basically a community of aspiring students currently being run by UIT RGPV college's IT department promoting innovation and growth in different technologies.

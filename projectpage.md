@@ -29,3 +29,8 @@ list of image links(cloudinary links),
 checked(boolen will tell if the project is checked by admin or not initially false)
 
 when user will submit database will create an entry.
+
+
+chat when selecting departments in the department field dropdown of the form modal since the color is white i can not see the options clearly fix this
+
+chat one problem is that lets say if the project requires any pdf submissions as well then we are stuck because we can not do this on cloudinary currently so fix this that the field can have images/pdfs so they can submit pdf as well configure the cloudinary to store manage and retrieve pdfs as well in the admin page
