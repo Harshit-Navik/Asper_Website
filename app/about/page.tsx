@@ -5,170 +5,195 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Calendar, Users, Lightbulb, Code2, MessageSquare, Rocket } from "lucide-react";
-import { useRouter } from "next/navigation";
-
-const offerings = [
-    {
-        icon: <Calendar className="w-6 h-6" />,
-        title: "Workshops & Training",
-        description: "Hands-on sessions on the latest technologies, from Cloud to Web Dev and AI.",
-    },
-    {
-        icon: <MessageSquare className="w-6 h-6" />,
-        title: "Tech Talks",
-        description: "Insightful sessions from industry experts and alumni sharing real-world experiences.",
-    },
-    {
-        icon: <Users className="w-6 h-6" />,
-        title: "Peer Learning",
-        description: "A collaborative environment where students teach, learn, and grow together.",
-    },
-    {
-        icon: <Code2 className="w-6 h-6" />,
-        title: "Project Building",
-        description: "Collaborate on open-source projects and build solutions for real-world problems.",
-    },
-    {
-        icon: <Lightbulb className="w-6 h-6" />,
-        title: "Mentorship",
-        description: "Guidance from seniors and professionals to help navigate your tech career path.",
-    },
-    {
-        icon: <Rocket className="w-6 h-6" />,
-        title: "Hackathons",
-        description: "Intense coding competitions to test your skills and foster innovation under pressure.",
-    },
-];
 
 export default function AboutPage() {
-    const router = useRouter();
+    const offerings = [
+        {
+            icon: <Calendar className="w-8 h-8 text-neon-red" />,
+            title: "Workshops & Training",
+            description: "Hands-on sessions on Cloud, AI/ML, and Full Stack Development.",
+        },
+        {
+            icon: <MessageSquare className="w-8 h-8 text-neon-red" />,
+            title: "Tech Talks",
+            description: "Insightful sessions from industry experts and alumni.",
+        },
+        {
+            icon: <Users className="w-8 h-8 text-neon-red" />,
+            title: "Peer Learning",
+            description: "Collaborative environment where students grow together.",
+        },
+        {
+            icon: <Code2 className="w-8 h-8 text-neon-red" />,
+            title: "Project Building",
+            description: "Build solutions for real-world problems in our labs.",
+        },
+        {
+            icon: <Lightbulb className="w-8 h-8 text-neon-red" />,
+            title: "Mentorship",
+            description: "Guidance from seniors to navigate your tech career.",
+        },
+        {
+            icon: <Rocket className="w-8 h-8 text-neon-red" />,
+            title: "Hackathons",
+            description: "Intense coding marathons to test your skills under pressure.",
+        },
+    ];
 
     return (
-        <main className="min-h-screen bg-deep-black text-white selection:bg-neon-red/30">
+        <main className="bg-deep-black min-h-screen text-white overflow-hidden">
             <Navbar />
 
+            {/* --- Gradients --- */}
+            <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-neon-red/10 rounded-full blur-[120px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px]" />
+            </div>
+
             {/* --- Hero Section --- */}
-            <section className="pt-32 pb-16 px-6 md:px-12 lg:px-24 border-b border-white/5">
-                <div className="max-w-6xl mx-auto">
-                    <motion.div
+            <section className="pt-40 pb-20 px-6 relative">
+                <div className="max-w-7xl mx-auto text-center">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-5xl md:text-8xl font-black tracking-tighter mb-8 font-heading"
+                    >
+                        BUILDING THE <span className="text-neon-red text-transparent bg-clip-text bg-gradient-to-r from-neon-red to-red-600">FUTURE</span>
+                    </motion.h1>
+                    <motion.p
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
+                        transition={{ delay: 0.2, duration: 0.8 }}
+                        className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed"
                     >
-                        <h1 className="text-5xl md:text-7xl font-black tracking-tight mb-8 font-heading">
-                            BUILDING THE <span className="text-neon-red">FUTURE</span>,<br />
-                            <span className="text-gray-500">ONE LINE AT A TIME.</span>
-                        </h1>
-                        <p className="text-xl md:text-2xl text-gray-400 max-w-3xl leading-relaxed">
-                            ASPER is the official technical club of the IT Department at UIT RGPV. We are a community-driven initiative providing a platform to learn, connect, and collaborate.
-                        </p>
+                        ASPER is the elite technical community of the IT Department, UIT RGPV.
+                        We don't just write code; we engineer the future.
+                    </motion.p>
+                </div>
+            </section>
+
+            {/* --- Stats Section --- */}
+            <section className="py-10 border-y border-white/5 bg-white/[0.02]">
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    {[
+                        { label: "Community Members", value: "100+" },
+                        { label: "Events Hosted", value: "20+" },
+                        { label: "Success Stories", value: "50+" },
+                        { label: "Years of Legacy", value: "5+" },
+                    ].map((stat, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, scale: 0.5 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: i * 0.1 }}
+                        >
+                            <h3 className="text-4xl md:text-5xl font-black text-white mb-2">{stat.value}</h3>
+                            <p className="text-gray-500 uppercase tracking-widest text-xs font-bold">{stat.label}</p>
+                        </motion.div>
+                    ))}
+                </div>
+            </section>
+
+            {/* --- Mission & Vision (Split) --- */}
+            <section className="py-24 px-6 max-w-7xl mx-auto">
+                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                    {/* Image Grid */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="grid grid-cols-2 gap-4"
+                    >
+                        <div className="space-y-4 translate-y-8">
+                            <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
+                                <Image
+                                    src="/assets/generated/innovation.png"
+                                    alt="Innovation"
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </div>
+                            <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
+                                <Image
+                                    src="/assets/generated/hackathon.png"
+                                    alt="Hackathon"
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </div>
+                        </div>
+                        <div className="space-y-4">
+                            <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
+                                <Image
+                                    src="/assets/generated/workshop.png"
+                                    alt="Workshop"
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </div>
+                            <div className="relative h-64 rounded-2xl overflow-hidden border border-white/10 group">
+                                <Image
+                                    src="/assets/generated/community.png"
+                                    alt="Community"
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                                />
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Text Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <span className="text-neon-red font-bold tracking-widest uppercase text-sm mb-2 block">Our Mission</span>
+                        <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">
+                            EMPOWERING <br />
+                            <span className="text-gray-600">INNOVATORS</span>
+                        </h2>
+                        <div className="space-y-6 text-lg text-gray-400 leading-relaxed">
+                            <p>
+                                As the official technical club of the Information Technology Department, our mission is simple:
+                                <span className="text-white font-bold"> To bridge the gap between academic theory and industrial application.</span>
+                            </p>
+                            <p>
+                                We foster a culture where experimentation is encouraged, failure is a stepping stone, and innovation is the norm.
+                                Whether it's cloud computing, AI, or blockchain, we provide the platform to master it.
+                            </p>
+                        </div>
                     </motion.div>
                 </div>
             </section>
 
-            {/* --- Community Collage --- */}
-            <section className="px-4 py-24 overflow-hidden relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-neon-red/5 blur-[120px] -z-10" />
+            {/* --- offerings / What we do --- */}
+            <section className="py-24 px-6 bg-white/[0.02] border-y border-white/5">
+                <div className="max-w-7xl mx-auto">
+                    <h2 className="text-4xl md:text-5xl font-black text-center mb-16">
+                        WHAT WE <span className="text-neon-red">DO</span>
+                    </h2>
 
-                <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 h-[400px] md:h-[500px]">
-                    <div className="relative col-span-2 row-span-2 rounded-3xl overflow-hidden bg-white/5 border border-white/10 group">
-                        <Image
-                            src="/assets/about_asper/asper_hackathon.png"
-                            alt="Community gathering"
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                        <div className="absolute bottom-0 left-0 p-6 bg-gradient-to-t from-black/80 to-transparent text-white w-full">
-                            <span className="font-bold font-heading tracking-wider">ANNUAL TECH FEST</span>
-                        </div>
-                    </div>
-                    <div className="relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hidden md:block group">
-                        <Image
-                            src="/assets/web_dev_cinematics.png"
-                            alt="Web Dev"
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
-                        />
-                    </div>
-                    <div className="relative rounded-3xl overflow-hidden bg-white/5 border border-white/10 hidden md:block group">
-                        <Image
-                            src="/assets/ml_ds_cinematics.png"
-                            alt="ML Workshop"
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
-                        />
-                    </div>
-                    <div className="relative col-span-2 md:col-span-2 rounded-3xl overflow-hidden bg-white/5 border border-white/10 group">
-                        <Image
-                            src="/assets/about_asper/asper_team.png"
-                            alt="Team Session"
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                    </div>
-                </div>
-            </section>
-
-            {/* --- Mission Section --- */}
-            <section className="py-20 px-6 bg-white/5 border-y border-white/5">
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16 items-center">
-                    <div className="flex-1">
-                        <span className="text-neon-red font-bold tracking-widest uppercase text-sm mb-2 block">Our Mission</span>
-                        <h2 className="text-4xl font-black mb-6 text-white font-heading">FOSTERING INNOVATION AT <span className="text-gray-500">RGPV</span></h2>
-                        <div className="space-y-6 text-lg text-gray-400 leading-relaxed">
-                            <p>
-                                Our mission is to foster a vibrant developer community at RGPV's School of Information Technology by promoting knowledge sharing, innovation, and collaboration.
-                            </p>
-                            <p>
-                                We aim to empower developers with cutting-edge skills and technologies through workshops, talks, and hands-on projects, bridging the gap between academic theory and industry application.
-                            </p>
-                        </div>
-                    </div>
-                    {/* Stats */}
-                    <div className="flex-1 w-full">
-                        <div className="grid grid-cols-2 gap-6">
-                            <div className="bg-deep-black p-8 rounded-3xl shadow-lg border border-white/10 col-span-1 hover:border-neon-red/30 transition-colors">
-                                <div className="text-5xl font-black text-white mb-2 font-heading">100+</div>
-                                <div className="text-gray-500 font-medium">Community Members</div>
-                            </div>
-                            <div className="bg-deep-black p-8 rounded-3xl shadow-lg border border-white/10 hover:border-neon-red/30 transition-colors">
-                                <div className="text-5xl font-black text-white mb-2 font-heading">10+</div>
-                                <div className="text-gray-500 font-medium">Events Hosted</div>
-                            </div>
-                            <div className="bg-deep-black p-8 rounded-3xl shadow-lg border border-white/10 col-span-2 hover:border-neon-red/30 transition-colors">
-                                <div className="text-5xl font-black text-white mb-2 font-heading">100%</div>
-                                <div className="text-gray-500 font-medium">Passion for Code</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* --- What We Do (Grid) --- */}
-            <section className="py-24 px-6 md:px-12">
-                <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black mb-6 font-heading text-white">WHAT WE <span className="text-neon-red">DO</span></h2>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            We don't just talk about code; we ship it. Here is how we engage with our community.
-                        </p>
-                    </div>
-
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {offerings.map((item, i) => (
                             <motion.div
                                 key={i}
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
-                                className="bg-white/5 p-8 rounded-3xl border border-white/10 hover:border-neon-red/50 hover:bg-white/10 transition-all duration-300 group"
+                                className="group p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-neon-red/50 hover:bg-white/10 transition-all duration-300 relative overflow-hidden"
                             >
-                                <div className="w-12 h-12 bg-deep-black rounded-2xl flex items-center justify-center mb-6 text-neon-red group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(255,0,51,0.2)]">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-neon-red/10 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2 group-hover:bg-neon-red/20 transition-all" />
+
+                                <div className="mb-6 p-4 rounded-xl bg-black/50 w-fit border border-white/10 group-hover:border-neon-red/50 transition-colors">
                                     {item.icon}
                                 </div>
-                                <h3 className="text-xl font-bold mb-3 text-white group-hover:text-neon-red transition-colors">{item.title}</h3>
-                                <p className="text-gray-400 leading-relaxed text-sm">
+
+                                <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-neon-red transition-colors">{item.title}</h3>
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors">
                                     {item.description}
                                 </p>
                             </motion.div>
@@ -177,22 +202,15 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* --- Join CTA --- */}
-            <section className="py-24 px-6 bg-gradient-to-b from-deep-black to-black text-white border-t border-white/5">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-6xl font-black mb-8 font-heading">READY TO START <span className="text-neon-red">BUILDING?</span></h2>
-                    <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                        Everyone is welcome regardless of skill level. Join us to learn, collaborate, and shape the future of technology.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button className="px-8 py-4 bg-neon-red text-white rounded-lg font-bold text-lg hover:shadow-[0_0_30px_rgba(255,0,51,0.5)] hover:scale-105 transition-all">
-                            Join the Chapter
-                        </button>
-                        <button className="px-8 py-4 border border-white/20 text-white rounded-lg font-bold text-lg hover:bg-white/10 transition-all">
-                            View Upcoming Events
-                        </button>
-                    </div>
-                </div>
+            {/* --- CTA --- */}
+            <section className="py-32 text-center px-6">
+                <h2 className="text-4xl md:text-6xl font-black text-white mb-8">JOIN THE <br /><span className="text-neon-red">REVOLUTION</span></h2>
+                <p className="text-gray-400 mb-10 max-w-xl mx-auto text-lg">
+                    The future belongs to those who build it. Are you ready to make your mark?
+                </p>
+                <button onClick={() => window.open("/signup", "_self")} className="px-10 py-4 bg-white text-black font-black text-xl rounded hover:bg-neon-red hover:text-white transition-all duration-300 shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,0,51,0.6)]">
+                    BECOME A MEMBER
+                </button>
             </section>
 
             <Footer />

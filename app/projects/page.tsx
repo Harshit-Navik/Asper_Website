@@ -103,12 +103,12 @@ export default function ProjectsPage() {
                         </div>
                     ) : projects.length === 0 ? (
                         <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-                            <p className="text-gray-400 mb-4">You haven't submitted any projects yet.</p>
+                            <p className="text-gray-400 mb-4">You haven't submitted your project yet.</p>
                             <button
                                 onClick={() => setIsModalOpen(true)}
                                 className="text-neon-red hover:underline"
                             >
-                                Submit your first project
+                                Submit your project
                             </button>
                         </div>
                     ) : (
