@@ -423,4 +423,20 @@ export const team: TeamMember[] = [
             github: "https://github.com/Nishant2356",
         }
     },
+    {
+        id: 29,
+        email: "9atishajain@gmail.com",
+        name: "Atisha Jain",
+        role: "Head",
+        department: "Corporate Relations",
+        branch: "IT",
+        year: "3rd",
+        image: "/images/team/Atisha_Jain.jpg",
+        bio: "",
+        socials: {
+            linkedin: "https://www.linkedin.com/in/atisha-jain2004",
+            instagram: "https://www.instagram.com/_atishajain?igsh=Y2NscDN0bDllNmhu",
+            github: "https://github.com/atisha-jain2004"
+        }
+    }
 ];
